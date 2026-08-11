@@ -390,12 +390,12 @@
                         <textarea id="prodDesc" rows="2" placeholder="Layar Super Retina XDR, Titanium Frame..." required></textarea>
                     </div>
                     <div class="form-group">
-                        <label>URL / File Foto Gambar</label>
-                        <input type="text" id="prodImg" placeholder="iphone.jpg atau https://..." required>
+                        <label>Nama File Gambar (Contoh: iphone.jpg)</label>
+                        <input type="text" id="prodImg" placeholder="iphone.jpg" required>
                     </div>
                     <div class="form-group">
-                        <label>URL / File Video Produk</label>
-                        <input type="text" id="prodVideo" placeholder="iphone.mp4 atau https://..." required>
+                        <label>Nama File Video (Contoh: iphone-demo.mp4)</label>
+                        <input type="text" id="prodVideo" placeholder="iphone-demo.mp4" required>
                     </div>
                     <button type="submit" class="btn-glossy">Simpan Produk ke Database</button>
                 </form>
@@ -406,27 +406,29 @@
                 <h2 class="panel-title">Katalog Produk Gadget Store</h2>
                 <div class="product-grid" id="productGrid">
 
-                    <!-- Product 1: iPhone 15 Pro Natural Titanium -->
+                    <!-- PRODUK 1: iPhone -->
                     <div class="product-card">
-                        <img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600" alt="iPhone 15 Pro Titanium Gray">
+                        <img src="iphone.jpg" alt="iPhone 15 Pro Titanium">
                         <div class="product-title">iPhone 15 Pro Titanium</div>
                         <div class="product-price">Rp 20.999.000</div>
                         <div class="product-desc">Warna Natural Titanium Gray. Chip A17 Pro, Bodi Titanium Ringan & Glossy Premium.</div>
                         <video controls>
-                            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                            <source src="iphone-demo.mp4" type="video/mp4">
+                            Browser kamu tidak mendukung video.
                         </video>
                         <a href="javascript:void(0)" class="btn-buy" onclick="openCheckout('iPhone 15 Pro Titanium', 'Rp 20.999.000')">Beli Sekarang</a>
                         <div class="status-badge">Status: Pesanan Belum Dibayar</div>
                     </div>
 
-                    <!-- Product 2: MacBook Pro Space Gray -->
+                    <!-- PRODUK 2: MacBook -->
                     <div class="product-card">
-                        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600" alt="MacBook Pro Space Gray">
+                        <img src="macbook.jpg" alt="MacBook Pro Space Gray">
                         <div class="product-title">MacBook Pro Space Gray</div>
                         <div class="product-price">Rp 28.499.000</div>
                         <div class="product-desc">Warna Glossy Space Gray. Chip M3 Max, RAM 36GB, Retina XDR Display.</div>
                         <video controls>
-                            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                            <source src="macbook-demo.mp4" type="video/mp4">
+                            Browser kamu tidak mendukung video.
                         </video>
                         <a href="javascript:void(0)" class="btn-buy" onclick="openCheckout('MacBook Pro Space Gray', 'Rp 28.499.000')">Beli Sekarang</a>
                         <div class="status-badge">Status: Pesanan Diproses</div>
@@ -437,7 +439,7 @@
         </div>
     </div>
 
-    <!-- Halaman Modal Checkout Interaktif (Muncul setelah klik Beli Sekarang) -->
+    <!-- Halaman Modal Checkout Interaktif -->
     <div class="checkout-modal" id="checkoutModal">
         <div class="checkout-box">
             <button class="close-btn" onclick="closeCheckout()">&times;</button>
@@ -538,4 +540,8 @@
                 document.getElementById('adminPanel').style.display = 'none';
             } else {
                 document.getElementById('adminPanel').style.display = 'block';
-         
+            }
+        }
+
+        function logout() {
+            document.getElementById('mainDashboard').style.display = '
