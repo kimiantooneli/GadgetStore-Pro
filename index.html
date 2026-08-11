@@ -1,1178 +1,467 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>GadgetStore Pro</title>
-
-<style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-body{
-    font-family:Arial, sans-serif;
-    background:#f4f4f4;
-    color:#222;
-}
-
-/* =========================
-   GENERAL
-========================= */
-
-.hidden{
-    display:none !important;
-}
-
-button{
-    font-family:Arial, sans-serif;
-    cursor:pointer;
-}
-
-.container{
-    width:92%;
-    max-width:1100px;
-    margin:30px auto;
-}
-
-.card{
-    background:white;
-    border-radius:12px;
-    padding:25px;
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
-}
-
-/* =========================
-   WELCOME
-========================= */
-
-#welcomePage{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#f4f4f4;
-    padding:20px;
-}
-
-.welcome-box{
-    background:white;
-    width:100%;
-    max-width:500px;
-    padding:40px 30px;
-    text-align:center;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,.1);
-}
-
-.logo{
-    width:65px;
-    height:65px;
-    background:#111;
-    color:white;
-    border-radius:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin:0 auto 20px;
-    font-size:28px;
-}
-
-.welcome-box h1{
-    font-size:30px;
-    margin-bottom:10px;
-}
-
-.welcome-box p{
-    color:#777;
-    margin-bottom:30px;
-}
-
-.role-buttons{
-    display:grid;
-    gap:15px;
-}
-
-.role-btn{
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:8px;
-    font-size:16px;
-    font-weight:bold;
-    background:#111;
-    color:white;
-}
-
-.role-btn:hover{
-    background:#333;
-}
-
-.role-btn.admin{
-    background:#eee;
-    color:#111;
-}
-
-/* =========================
-   LOGIN
-========================= */
-
-.login-box{
-    max-width:450px;
-    margin:60px auto;
-}
-
-.login-box h2{
-    margin-bottom:10px;
-}
-
-.subtitle{
-    color:#777;
-    margin-bottom:25px;
-}
-
-.form-group{
-    margin-bottom:18px;
-}
-
-label{
-    display:block;
-    font-weight:bold;
-    font-size:14px;
-    margin-bottom:7px;
-}
-
-input,
-textarea,
-select{
-    width:100%;
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:7px;
-    font-size:14px;
-}
-
-textarea{
-    min-height:110px;
-    resize:vertical;
-}
-
-input:focus,
-textarea:focus,
-select:focus{
-    outline:none;
-    border-color:#111;
-}
-
-.main-btn{
-    width:100%;
-    padding:13px;
-    border:none;
-    border-radius:7px;
-    background:#111;
-    color:white;
-    font-weight:bold;
-    font-size:15px;
-}
-
-.main-btn:hover{
-    background:#333;
-}
-
-.secondary-btn{
-    width:100%;
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:7px;
-    background:white;
-    color:#222;
-    font-weight:bold;
-    margin-top:10px;
-}
-
-.link{
-    color:#111;
-    font-weight:bold;
-    cursor:pointer;
-    text-decoration:underline;
-}
-
-.small-text{
-    text-align:center;
-    margin-top:18px;
-    color:#777;
-    font-size:14px;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-header{
-    background:#111;
-    color:white;
-    padding:25px 20px;
-    text-align:center;
-}
-
-header h1{
-    font-size:30px;
-    margin-bottom:8px;
-}
-
-header p{
-    color:#ccc;
-}
-
-/* =========================
-   NAV
-========================= */
-
-.navbar{
-    background:white;
-    border-bottom:1px solid #ddd;
-    padding:12px 20px;
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    flex-wrap:wrap;
-}
-
-.navbar button{
-    border:none;
-    background:#eee;
-    padding:10px 18px;
-    border-radius:7px;
-    font-weight:bold;
-}
-
-.navbar button:hover{
-    background:#ddd;
-}
-
-.logout{
-    background:#111 !important;
-    color:white;
-}
-
-/* =========================
-   SECTION
-========================= */
-
-.section-title{
-    margin-bottom:8px;
-}
-
-.section-description{
-    color:#777;
-    margin-bottom:25px;
-}
-
-/* =========================
-   PRODUCTS
-========================= */
-
-.product-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:20px;
-}
-
-.product-card{
-    border:1px solid #ddd;
-    border-radius:10px;
-    overflow:hidden;
-    background:white;
-}
-
-.product-image{
-    width:100%;
-    height:220px;
-    object-fit:cover;
-    display:block;
-}
-
-.product-info{
-    padding:18px;
-}
-
-.product-info h3{
-    margin-bottom:8px;
-}
-
-.price{
-    font-size:20px;
-    font-weight:bold;
-    margin-bottom:10px;
-}
-
-.description{
-    color:#666;
-    line-height:1.5;
-    margin-bottom:15px;
-}
-
-.product-video{
-    width:100%;
-    height:200px;
-    background:#111;
-    border-radius:7px;
-    margin-bottom:15px;
-}
-
-.buy-btn{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:7px;
-    background:#111;
-    color:white;
-    font-weight:bold;
-}
-
-/* =========================
-   ADMIN FORM
-========================= */
-
-.form-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-}
-
-.full{
-    grid-column:1 / -1;
-}
-
-.save-btn{
-    background:#111;
-    color:white;
-    border:none;
-    padding:13px 20px;
-    border-radius:7px;
-    font-weight:bold;
-}
-
-.admin-product{
-    display:flex;
-    align-items:center;
-    gap:15px;
-    padding:15px;
-    border:1px solid #ddd;
-    border-radius:8px;
-    margin-top:12px;
-}
-
-.admin-product img{
-    width:75px;
-    height:75px;
-    object-fit:cover;
-    border-radius:7px;
-}
-
-.admin-info{
-    flex:1;
-}
-
-.delete-btn{
-    border:none;
-    background:#d9534f;
-    color:white;
-    padding:9px 12px;
-    border-radius:6px;
-}
-
-/* =========================
-   CHECKOUT
-========================= */
-
-.checkout{
-    max-width:650px;
-    margin:30px auto;
-}
-
-.selected-product{
-    background:#f5f5f5;
-    padding:15px;
-    border-radius:8px;
-    margin-bottom:20px;
-}
-
-/* =========================
-   STATUS
-========================= */
-
-.status{
-    margin-top:25px;
-    padding:20px;
-    background:#f5f5f5;
-    border-radius:8px;
-}
-
-.status-list{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:8px;
-    margin-top:20px;
-}
-
-.status-item{
-    text-align:center;
-    color:#999;
-    font-size:13px;
-}
-
-.circle{
-    width:32px;
-    height:32px;
-    border-radius:50%;
-    background:#ddd;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin:0 auto 7px;
-}
-
-.status-item.active{
-    color:#111;
-    font-weight:bold;
-}
-
-.status-item.active .circle{
-    background:#111;
-    color:white;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer{
-    background:#111;
-    color:#aaa;
-    text-align:center;
-    padding:25px;
-    margin-top:40px;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:700px){
-
-    .product-grid{
-        grid-template-columns:1fr;
-    }
-
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-
-    .full{
-        grid-column:auto;
-    }
-
-    .status-list{
-        grid-template-columns:1fr;
-        text-align:left;
-    }
-
-    .status-item{
-        display:flex;
-        align-items:center;
-        gap:10px;
-        text-align:left;
-    }
-
-    .circle{
-        margin:0;
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GadgetStore Management System</title>
+    <style>
+        /* CSS Dasar - Warna Netral */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        header h1 {
+            color: #1a252f;
+            font-size: 26px;
+        }
+
+        /* Container & Modal Auth */
+        .auth-container {
+            max-width: 400px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: none;
+            font-weight: bold;
+            color: #64748b;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            color: #2563eb;
+            border-bottom: 2px solid #2563eb;
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .link-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+
+        .link-text a {
+            color: #2563eb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Dashboard & Layout */
+        .dashboard {
+            display: none;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+        }
+
+        .admin-panel {
+            flex: 1;
+        }
+
+        .customer-panel {
+            flex: 2;
+        }
+
+        .panel-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+            color: #1e293b;
+        }
+
+        /* Grid Katalog Produk */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 15px;
+        }
+
+        .product-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0 4px 0;
+        }
+
+        .product-price {
+            color: #059669;
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .product-desc {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .product-card video {
+            width: 100%;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .btn-buy {
+            display: block;
+            text-align: center;
+            background-color: #10b981;
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .btn-buy:hover {
+            background-color: #059669;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto 20px auto;
+            background: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn-logout {
+            background-color: #ef4444;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Status Pesanan Section */
+        .order-status {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f8fafc;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+    </style>
 </head>
-
-
 <body>
 
-
-<!-- =====================================================
-     HALAMAN AWAL
-===================================================== -->
-
-<div id="welcomePage">
-
-    <div class="welcome-box">
-
-        <div class="logo">
-            G
-        </div>
-
-        <h1>
-            GadgetStore Pro
-        </h1>
-
-        <p>
-            Sistem Manajemen & E-Commerce Gadget
-        </p>
-
-        <div class="role-buttons">
-
-            <button
-                class="role-btn"
-                onclick="openBuyerLogin()">
-
-                🛍️ Masuk sebagai Pembeli
-
-            </button>
-
-            <button
-                class="role-btn admin"
-                onclick="openAdminLogin()">
-
-                ⚙️ Masuk sebagai Administrator
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<!-- =====================================================
-     LOGIN PEMBELI
-===================================================== -->
-
-<div id="buyerLoginPage" class="hidden">
-
-    <div class="container">
-
-        <div class="card login-box">
-
-            <h2>
-                Login Pembeli
-            </h2>
-
-            <p class="subtitle">
-                Masuk untuk berbelanja di GadgetStore Pro.
-            </p>
-
-
-            <div class="form-group">
-
-                <label>
-                    Username
-                </label>
-
-                <input
-                    type="text"
-                    id="loginUsername"
-                    placeholder="Masukkan username">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    id="loginPassword"
-                    placeholder="Masukkan password">
-
-            </div>
-
-
-            <button
-                class="main-btn"
-                onclick="buyerLogin()">
-
-                Login
-
-            </button>
-
-
-            <p class="small-text">
-
-                Belum punya akun?
-
-                <span
-                    class="link"
-                    onclick="openRegister()">
-
-                    Create Account
-
-                </span>
-
-            </p>
-
-
-            <button
-                class="secondary-btn"
-                onclick="backToWelcome()">
-
-                ← Kembali
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<!-- =====================================================
-     CREATE ACCOUNT
-===================================================== -->
-
-<div id="registerPage" class="hidden">
-
-    <div class="container">
-
-        <div class="card login-box">
-
-            <h2>
-                Create Account
-            </h2>
-
-            <p class="subtitle">
-                Buat akun pembeli baru.
-            </p>
-
-
-            <div class="form-group">
-
-                <label>
-                    Nama
-                </label>
-
-                <input
-                    type="text"
-                    id="registerName"
-                    placeholder="Nama kamu">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Username
-                </label>
-
-                <input
-                    type="text"
-                    id="registerUsername"
-                    placeholder="Buat username">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    id="registerPassword"
-                    placeholder="Buat password">
-
-            </div>
-
-
-            <button
-                class="main-btn"
-                onclick="registerAccount()">
-
-                Create Account
-
-            </button>
-
-
-            <button
-                class="secondary-btn"
-                onclick="openBuyerLogin()">
-
-                ← Kembali ke Login
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<!-- =====================================================
-     LOGIN ADMIN
-===================================================== -->
-
-<div id="adminLoginPage" class="hidden">
-
-    <div class="container">
-
-        <div class="card login-box">
-
-            <h2>
-                Login Administrator
-            </h2>
-
-            <p class="subtitle">
-                Masukkan password administrator.
-            </p>
-
-
-            <div class="form-group">
-
-                <label>
-                    Password Admin
-                </label>
-
-                <input
-                    type="password"
-                    id="adminPassword"
-                    placeholder="Password administrator">
-
-            </div>
-
-
-            <button
-                class="main-btn"
-                onclick="adminLogin()">
-
-                Login Administrator
-
-            </button>
-
-
-            <button
-                class="secondary-btn"
-                onclick="backToWelcome()">
-
-                ← Kembali
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<!-- =====================================================
-     HALAMAN UTAMA
-===================================================== -->
-
-<div id="mainPage" class="hidden">
-
+    <!-- Header Utama -->
     <header>
-
-        <h1>
-            GadgetStore Pro
-        </h1>
-
-        <p>
-            Sistem Manajemen & E-Commerce Gadget
-        </p>
-
+        <h1>GadgetStore Management System</h1>
     </header>
 
-
-    <nav class="navbar">
-
-        <button
-            id="catalogNav"
-            onclick="showCatalog()">
-
-            🛍️ Katalog
-
-        </button>
-
-
-        <button
-            id="adminNav"
-            onclick="showAdmin()">
-
-            ⚙️ Administrator
-
-        </button>
-
-
-        <button
-            class="logout"
-            onclick="logout()">
-
-            Keluar
-
-        </button>
-
-    </nav>
-
-
-    <!-- ================= PEMBELI ================= -->
-
-    <div
-        id="catalogSection"
-        class="container">
-
-        <div class="card">
-
-            <h2 class="section-title">
-                Katalog Produk
-            </h2>
-
-            <p class="section-description">
-                Pilih gadget yang ingin kamu beli.
-            </p>
-
-
-            <div
-                id="productGrid"
-                class="product-grid">
-            </div>
-
+    <!-- Halaman Login / Registrasi -->
+    <div class="auth-container" id="authSection">
+        <div class="auth-tabs">
+            <button class="tab-btn active" onclick="switchTab('user')">Pengguna</button>
+            <button class="tab-btn" onclick="switchTab('admin')">Admin</button>
         </div>
 
-
-        <!-- CHECKOUT -->
-
-        <div
-            id="checkoutSection"
-            class="card checkout hidden">
-
-            <h2>
-                Checkout
-            </h2>
-
-            <p class="section-description">
-                Lengkapi data pembelian.
-            </p>
-
-
-            <div
-                id="selectedProduct"
-                class="selected-product">
-            </div>
-
-
+        <!-- Form Login Pengguna -->
+        <form id="userLoginForm" onsubmit="loginUser(event)">
             <div class="form-group">
-
-                <label>
-                    Nama Pembeli
-                </label>
-
-                <input
-                    type="text"
-                    id="buyerName"
-                    placeholder="Nama lengkap">
-
+                <label>Username</label>
+                <input type="text" placeholder="Masukkan username" required>
             </div>
-
-
             <div class="form-group">
-
-                <label>
-                    Alamat
-                </label>
-
-                <textarea
-                    id="buyerAddress"
-                    placeholder="Alamat lengkap">
-                </textarea>
-
+                <label>Password</label>
+                <input type="password" placeholder="Masukkan password" required>
             </div>
+            <button type="submit" class="btn">Masuk sebagai Pengguna</button>
+            <div class="link-text">
+                Belum punya akun? <a onclick="toggleRegister()">Create Account</a>
+            </div>
+        </form>
 
-
+        <!-- Form Registrasi Pengguna -->
+        <form id="userRegisterForm" style="display: none;" onsubmit="registerUser(event)">
             <div class="form-group">
-
-                <label>
-                    Metode Pembayaran
-                </label>
-
-                <select id="payment">
-
-                    <option value="">
-                        Pilih metode pembayaran
-                    </option>
-
-                    <option>
-                        Transfer Bank
-                    </option>
-
-                    <option>
-                        E-Wallet
-                    </option>
-
-                    <option>
-                        COD
-                    </option>
-
-                </select>
-
+                <label>Username Baru</label>
+                <input type="text" placeholder="Buat username" required>
             </div>
-
-
-            <button
-                class="main-btn"
-                onclick="processOrder()">
-
-                Buat Pesanan
-
-            </button>
-
-
-            <div
-                id="statusBox"
-                class="status hidden">
-
-                <h3>
-                    Pesanan Berhasil!
-                </h3>
-
-                <p style="margin-top:7px;color:#777;">
-                    Status pesanan:
-                </p>
-
-
-                <div class="status-list">
-
-                    <div class="status-item active">
-
-                        <div class="circle">
-                            1
-                        </div>
-
-                        Belum Dibayar
-
-                    </div>
-
-
-                    <div class="status-item">
-
-                        <div class="circle">
-                            2
-                        </div>
-
-                        Diproses
-
-                    </div>
-
-
-                    <div class="status-item">
-
-                        <div class="circle">
-                            3
-                        </div>
-
-                        Dikirim
-
-                    </div>
-
-
-                    <div class="status-item">
-
-                        <div class="circle">
-                            4
-                        </div>
-
-                        Selesai
-
-                    </div>
-
-                </div>
-
+            <div class="form-group">
+                <label>Password Baru</label>
+                <input type="password" placeholder="Buat password" required>
             </div>
+            <button type="submit" class="btn">Daftar Akun</button>
+            <div class="link-text">
+                Sudah punya akun? <a onclick="toggleRegister()">Login</a>
+            </div>
+        </form>
 
-        </div>
-
+        <!-- Form Login Admin -->
+        <form id="adminLoginForm" style="display: none;" onsubmit="loginAdmin(event)">
+            <div class="form-group">
+                <label>Password Admin</label>
+                <input type="password" id="adminPassword" placeholder="Masukkan password admin" required>
+            </div>
+            <button type="submit" class="btn">Masuk Panel Admin</button>
+        </form>
     </div>
 
-
-
-    <!-- ================= ADMIN ================= -->
-
-    <div
-        id="adminSection"
-        class="container hidden">
-
-        <div class="card">
-
-            <h2 class="section-title">
-                Panel Administrator
-            </h2>
-
-            <p class="section-description">
-                Tambahkan dan kelola produk GadgetStore Pro.
-            </p>
-
-
-            <form
-                onsubmit="addProduct(event)">
-
-                <div class="form-grid">
-
-
-                    <!-- 1 NAMA -->
-
-                    <div class="form-group">
-
-                        <label>
-                            1. Nama Produk
-                        </label>
-
-                        <input
-                            type="text"
-                            id="productName"
-                            placeholder="Contoh: Smartphone Premium"
-                            required>
-
-                    </div>
-
-
-                    <!-- 2 HARGA -->
-
-                    <div class="form-group">
-
-                        <label>
-                            2. Harga Produk
-                        </label>
-
-                        <input
-                            type="number"
-                            id="productPrice"
-                            placeholder="12000000"
-                            required>
-
-                    </div>
-
-
-                    <!-- 3 DESKRIPSI -->
-
-                    <div class="form-group full">
-
-                        <label>
-                            3. Deskripsi & Spesifikasi
-                        </label>
-
-                        <textarea
-                            id="productDescription"
-                            placeholder="Contoh: RAM 8GB, Storage 256GB, layar 120Hz..."
-                            required>
-                        </textarea>
-
-                    </div>
-
-
-                    <!-- 4 FOTO -->
-
-                    <div class="form-group">
-
-                        <label>
-                            4. URL Gambar Produk
-                        </label>
-
-                        <input
-                            type="url"
-                            id="productImage"
-                            placeholder="https://..."
-                            required>
-
-                    </div>
-
-
-                    <!-- 5 VIDEO -->
-
-                    <div class="form-group">
-
-                        <label>
-                            5. URL Video Produk
-                        </label>
-
-                        <input
-                            type="text"
-                            id="productVideo"
-                            placeholder="videos/smartphone.mp4"
-                            required>
-
-                    </div>
-
-
-                    <!-- BUTTON -->
-
-                    <div class="form-group full">
-
-                        <button
-                            class="save-btn"
-                            type="submit">
-
-                            Simpan Produk ke Database
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </form>
-
+    <!-- Halaman Utama Aplikasi (Muncul Setelah Login) -->
+    <div id="mainDashboard">
+        <div class="nav-bar">
+            <span id="userInfo">Logged in as: <b>Guest</b></span>
+            <button class="btn-logout" onclick="logout()">Logout</button>
         </div>
 
-
-        <!-- PRODUK ADMIN -->
-
-        <div
-            class="card"
-            style="margin-top:25px;">
-
-            <h3>
-                Daftar Produk
-            </h3>
-
-
-            <div
-                id="adminProductList">
+        <div class="dashboard" style="display: flex;">
+            <!-- 1. Panel Admin (Manajemen Produk) -->
+            <div class="panel admin-panel" id="adminPanel">
+                <h2 class="panel-title">Panel Admin - Tambah Produk</h2>
+                <form id="productForm" onsubmit="addProduct(event)">
+                    <div class="form-group">
+                        <label>Nama Produk</label>
+                        <input type="text" id="prodName" placeholder="Contoh: Smartphone Premium" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Deskripsi & Harga Produk</label>
+                        <textarea id="prodDesc" rows="3" placeholder="Contoh: Rp 12.000.000&#10;Layar 120Hz, RAM 12GB, Storage 256GB" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>URL Gambar Produk</label>
+                        <input type="url" id="prodImg" placeholder="https://..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>URL Video Produk</label>
+                        <input type="url" id="prodVideo" placeholder="https://..." required>
+                    </div>
+                    <button type="submit" class="btn">Simpan Produk ke Database</button>
+                </form>
             </div>
 
-        </div>
+            <!-- 2. Panel Pembeli (Katalog & Transaksi) -->
+            <div class="panel customer-panel" id="customerPanel">
+                <h2 class="panel-title">Katalog Produk</h2>
+                <div class="product-grid" id="productGrid">
+                    <!-- Produk Default sesuai Soal -->
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500" alt="Smartphone Premium">
+                        <div class="product-title">Smartphone Premium</div>
+                        <div class="product-price">Rp 12.000.000</div>
+                        <div class="product-desc">Spesifikasi: Layar 120Hz, RAM 12GB, Kamera 108MP, Baterai 5000mAh.</div>
+                        <video controls>
+                            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                            Browser Anda tidak mendukung tag video.
+                        </video>
+                        <a href="#" class="btn-buy" onclick="checkout('Smartphone Premium')">Beli Sekarang</a>
+                        <div class="order-status">
+                            Status Pesanan: <b>Pesanan Diproses</b>
+                        </div>
+                    </div>
 
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500" alt="Laptop Ultra">
+                        <div class="product-title">Laptop Ultra</div>
+                        <div class="product-price">Rp 18.500.000</div>
+                        <div class="product-desc">Spesifikasi: Intel Core i7, RAM 16GB, SSD 1TB NVMe, Tipis & Ringan.</div>
+                        <video controls>
+                            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                            Browser Anda tidak mendukung tag video.
+                        </video>
+                        <a href="#" class="btn-buy" onclick="checkout('Laptop Ultra')">Beli Sekarang</a>
+                        <div class="order-status">
+                            Status Pesanan: <b>Pesanan Belum Dibayar</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- JavaScript Logika Sederhana -->
+    <script>
+        function switchTab(role) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => tab.classList.remove('active'));
 
-    <footer>
+            if (role === 'user') {
+                tabs[0].classList.add('active');
+                document.getElementById('userLoginForm').style.display = 'block';
+                document.getElementById('adminLoginForm').style.display = 'none';
+                document.getElementById('userRegisterForm').style.display = 'none';
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('userLoginForm').style.display = 'none';
+                document.getElementById('adminLoginForm').style.display = 'block';
+                document.getElementById('userRegisterForm').style.display = 'none';
+            }
+        }
 
-        GadgetStore Pro © 2026
+        function toggleRegister() {
+            const loginForm = document.getElementById('userLoginForm');
+            const regForm = document.getElementById('userRegisterForm');
+            if (loginForm.style.display === 'none') {
+                loginForm.style.display = 'block';
+                regForm.style.display = 'none';
+            } else {
+                loginForm.style.display = 'none';
+                regForm.style.display = 'block';
+            }
+        }
 
-    </footer>
+        function loginUser(e) {
+            e.preventDefault();
+            startSession('Pengguna (Customer)', false);
+        }
 
-</div>
+        function registerUser(e) {
+            e.preventDefault();
+            alert('Akun berhasil dibuat! Silakan login.');
+            toggleRegister();
+        }
 
+        function loginAdmin(e) {
+            e.preventDefault();
+            startSession('Administrator', true);
+        }
 
+        function startSession(roleName, isAdmin) {
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('mainDashboard').style.display = 'block';
+            document.getElementById('userInfo').innerHTML = 'Logged in as: <b>' + roleName + '</b>';
+            
+            // Sembunyikan Form Tambah Produk jika yang login adalah Pembeli biasa
+            if (!isAdmin) {
+                document.getElementById('adminPanel').style.display = 'none';
+            } else {
+                document.getElementById('adminPanel').style.display = 'block';
+            }
+        }
 
-<script>
+        function logout() {
+            document.getElementById('mainDashboard').style.display = 'none';
+            document.getElementById('authSection').style.display = 'block';
+        }
 
-/* =====================================================
-   DATA PRODUK
-===================================================== */
+        function addProduct(e) {
+            e.preventDefault();
+            const name = document.getElementById('prodName').value;
+            const desc = document.getElementById('prodDesc').value;
+            const img = document.getElementById('prodImg').value;
+            const video = document.getElementById('prodVideo').value;
 
-let products =
-JSON.parse(localS
+            const grid = document.getElementById('productGrid');
+            const newCard = document.createElement('div');
+            newCard.className = 'product-card';
+            newCard.innerHTML = `
+                <img src="${img}" alt="${name}">
+                <div class="product-title">${name}</div>
+                <div class="product-desc">${desc}</div>
+                <video controls>
+                    <source src="${video}" type="video/mp4">
+                </video>
+                <a href="#" class="btn-buy" onclick="checkout('${name}')">Beli Sekarang</a>
+                <div class="order-status">Status Pesanan: <b>Belum Dibayar</b></div>
+            `;
+            grid.appendChild(newCard);
+
+            alert('Produk berhasil ditambahkan ke Katalog!');
+            document.getElementById('productForm').reset();
+        }
+
+        function checkout(productName) {
+            alert('Terima kasih! Anda menekan Beli Sekarang untuk: ' + productName + '\nStatus pesanan diperbarui.');
+        }
+
+        // Sembunyikan dashboard di awal
+        document.getElementById('mainDashboard').style.display = 'none';
+    </script>
+</body>
+            </html>
