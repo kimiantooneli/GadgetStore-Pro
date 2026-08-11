@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GadgetStore Pro</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:Arial, sans-serif;
+            background:#f5f5f5;
+            color:#222;
+        }
+
+        /* ================= HEADER ================= */
+
+        header{
+            background:#111;
+            color:white;
+            padding:25px 20px;
+            text-align:center;
+        }
+
+        header h1{
+            font-size:30px;
+            margin-bottom:8px;
+        }
+
+        header p{
+            color:#ccc;
+            font-size:14px;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav{
+            background:white;
+            border-bottom:1px solid #ddd;
+            padding:15px;
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            position:sticky;
+            top:0;
+            z-index:100;
+        }
+
+        nav button{
+            border:none;
+            background:#eee;
+            padding:10px 18px;
+            border-radius:6px;
+            cursor:pointer;
+            font-weight:bold;
+        }
+
+        nav button:hover{
+            background:#ddd;
+        }
+
+        nav button.active{
+            background:#111;
+            color:white;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container{
+            width:90%;
+            max-width:1200px;
+            margin:30px auto;
+        }
+
+        .section{
+            background:white;
+            padding:25px;
+            margin-bottom:30px;
+            border-radius:12px;
+            box-shadow:0 3px 12px rgba(0,0,0,.08);
+        }
+
+        .section h2{
+            margin-bottom:8px;
+        }
+
+        .section-subtitle{
+            color:#777;
+            margin-bottom:25px;
+        }
+
+        /* ================= ADMIN ================= */
+
+        .form-grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:15px;
+        }
+
+        .form-group{
+            margin-bottom:15px;
+        }
+
+        .form-group.full{
+            grid-column:1 / -1;
+        }
+
+        label{
+            display:block;
+            margin-bottom:7px;
+            font-weight:bold;
+            font-size:14px;
+        }
+
+        input,
+        textarea,
+        select{
+            width:100%;
+            padding:12px;
+            border:1px solid #ccc;
+            border-radius:7px;
+            font-family:Arial;
+            font-size:14px;
+        }
+
+        textarea{
+            min-height:100px;
+            resize:vertical;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus{
+            outline:none;
+            border-color:#111;
+        }
+
+        .btn{
+            border:none;
+            padding:12px 20px;
+            border-radius:7px;
+            cursor:pointer;
+            font-weight:bold;
+            transition:.2s;
+        }
+
+        .btn:hover{
+            transform:translateY(-1px);
+        }
+
+        .btn-black{
+            background:#111;
+            color:white;
+        }
+
+        .btn-gray{
+            background:#eee;
+            color:#222;
+        }
+
+        .btn-danger{
+            background:#e74c3c;
+            color:white;
+        }
+
+        /* ================= PRODUCT GRID ================= */
+
+        .product-grid{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:20px;
+        }
+
+        .product-card{
+            border:1px solid #ddd;
+            border-radius:10px;
+            overflow:hidden;
+            background:white;
+        }
+
+        .product-image{
+            width:100%;
+            height:220px;
+            object-fit:cover;
+            display:block;
+        }
+
+        .product-content{
+            padding:18px;
+        }
+
+        .product-name{
+            font-size:20px;
+            margin-bottom:8px;
+        }
+
+        .price{
+            font-size:20px;
+            font-weight:bold;
+            margin-bottom:10px;
+        }
+
+        .description{
+            color:#666;
+            line-height:1.5;
+            font-size:14px;
+            margin-bottom:15px;
+        }
+
+        /* ================= VIDEO ================= */
+
+        .video-title{
+            font-size:14px;
+            font-weight:bold;
+            margin-bottom:7px;
+        }
+
+        .product-video{
+            width:100%;
+            height:200px;
+            background:#000;
+            border-radius:7px;
+            margin-bottom:15px;
+        }
+
+        /* ================= BUTTON ================= */
+
+        .buy-btn{
+            display:block;
+            width:100%;
+            text-align:center;
+            background:#111;
+            color:white;
+            text-decoration:none;
+            padding:12px;
+            border-radius:7px;
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        .buy-btn:hover{
+            background:#333;
+        }
+
+        /* ================= CHECKOUT ================= */
+
+        .checkout-box{
+            max-width:600px;
+            margin:auto;
+        }
+
+        .checkout-product{
+            background:#f5f5f5;
+            padding:15px;
+            border-radius:8px;
+            margin-bottom:20px;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status-box{
+            margin-top:20px;
+            padding:20px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            background:#fafafa;
+        }
+
+        .status-list{
+            display:flex;
+            justify-content:space-between;
+            margin-top:20px;
+            gap:5px;
+        }
+
+        .status-item{
+            flex:1;
+            text-align:center;
+            font-size:12px;
+            color:#999;
+        }
+
+        .status-circle{
+            width:30px;
+            height:30px;
+            border-radius:50%;
+            background:#ddd;
+            margin:0 auto 7px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-weight:bold;
+        }
+
+        .status-item.active{
+            color:#111;
+            font-weight:bold;
+        }
+
+        .status-item.active .status-circle{
+            background:#111;
+            color:white;
+        }
+
+        /* ================= ADMIN PRODUCTS ================= */
+
+        .admin-product{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:15px;
+            padding:15px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            margin-bottom:10px;
+        }
+
+        .admin-product img{
+            width:70px;
+            height:70px;
+            object-fit:cover;
+            border-radius:7px;
+        }
+
+        .admin-product-info{
+            flex:1;
+        }
+
+        .admin-product-info h4{
+            margin-bottom:5px;
+        }
+
+        .admin-product-info p{
+            color:#777;
+            font-size:13px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer{
+            background:#111;
+            color:#aaa;
+            text-align:center;
+            padding:25px;
+            margin-top:30px;
+            font-size:13px;
+        }
+
+        /* ================= HIDDEN ================= */
+
+        .hidden{
+            display:none;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width:700px){
+
+            .container{
+                width:94%;
+            }
+
+            .form-grid{
+                grid-template-columns:1fr;
+            }
+
+            .form-group.full{
+                grid-column:auto;
+            }
+
+            .product-grid{
+                grid-template-columns:1fr;
+            }
+
+            .status-list{
+                flex-direction:column;
+                gap:10px;
+            }
+
+            .status-item{
+                display:flex;
+                align-items:center;
+                gap:10px;
+                text-align:left;
+            }
+
+            .status-circle{
+                margin:0;
+                flex-shrink:0;
+            }
+
+            .admin-product{
+                align-items:flex-start;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <h1>GadgetStore Pro</h1>
+
+    <p>
+        Sistem Manajemen & E-Commerce Gadget
+    </p>
+
+</header>
+
+
+<!-- ================= NAVIGATION ================= -->
+
+<nav>
+
+    <button
+        class="active"
+        onclick="showPanel('buyer', this)">
+        Panel Pembeli
+    </button>
+
+    <button
+        onclick="showPanel('admin', this)">
+        Panel Administrator
+    </button>
+
+</nav>
+
+
+<div class="container">
+
+
+    <!-- ================================================= -->
+    <!--                 PANEL PEMBELI                     -->
+    <!-- ================================================= -->
+
+    <section id="buyerPanel" class="section">
+
+        <h2>🛍️ Katalog Produk</h2>
+
+        <p class="section-subtitle">
+            Temukan gadget pilihan dengan harga terbaik.
+        </p>
+
+
+        <div
+            id="productGrid"
+            class="product-grid">
+        </div>
+
+
+        <!-- ================= CHECKOUT ================= -->
+
+        <div
+            id="checkoutSection"
+            class="checkout-box hidden">
+
+            <hr style="margin:30px 0;border:none;border-top:1px solid #ddd;">
+
+            <h2>Checkout</h2>
+
+            <p class="section-subtitle">
+                Lengkapi data pembelian.
+            </p>
+
+            <div
+                id="checkoutProduct"
+                class="checkout-product">
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Nama Pembeli
+                </label>
+
+                <input
+                    type="text"
+                    id="buyerName"
+                    placeholder="Masukkan nama">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Alamat Pengiriman
+                </label>
+
+                <textarea
+                    id="buyerAddress"
+                    placeholder="Masukkan alamat lengkap">
+                </textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Metode Pembayaran
+                </label>
+
+                <select id="payment">
+
+                    <option value="">
+                        Pilih pembayaran
+                    </option>
+
+                    <option>
+                        Transfer Bank
+                    </option>
+
+                    <option>
+                        E-Wallet
+                    </option>
+
+                    <option>
+                        COD
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                class="btn btn-black"
+                onclick="processOrder()">
+
+                Buat Pesanan
+
+            </button>
+
+
+            <div
+                id="orderResult"
+                class="status-box hidden">
+
+                <h3>
+                    Pesanan Berhasil Dibuat!
+                </h3>
+
+                <p style="margin-top:8px;color:#666;">
+                    Status pesanan kamu:
+                </p>
+
+
+                <div class="status-list">
+
+                    <div
+                        class="status-item active">
+
+                        <div class="status-circle">
+                            1
+                        </div>
+
+                        Belum Dibayar
+
+                    </div>
+
+
+                    <div class="status-item">
+
+                        <div class="status-circle">
+                            2
+                        </div>
+
+                        Diproses
+
+                    </div>
+
+
+                    <div class="status-item">
+
+                        <div class="status-circle">
+                            3
+                        </div>
+
+                        Dikirim
+
+                    </div>
+
+
+                    <div class="status-item">
+
+                        <div class="status-circle">
+                            4
+                        </div>
+
+                        Selesai
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================================= -->
+    <!--                 PANEL ADMIN                       -->
+    <!-- ================================================= -->
+
+    <section
+        id="adminPanel"
+        class="section hidden">
+
+        <h2>⚙️ Panel Administrator</h2>
+
+        <p class="section-subtitle">
+            Kelola inventaris produk GadgetStore Pro.
+        </p>
+
+
+        <form
+            onsubmit="addProduct(event)">
+
+            <div class="form-grid">
+
+
+                <!-- NAMA -->
+
+                <div class="form-group">
+
+                    <label>
+                        Nama Produk
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productName"
+                        placeholder="Contoh: Smartphone Premium"
+                        required>
+
+                </div>
+
+
+                <!-- HARGA -->
+
+                <div class="form-group">
+
+                    <label>
+                        Harga Produk
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productPrice"
+                        placeholder="12000000"
+                        required>
+
+                </div>
+
+
+                <!-- DESKRIPSI -->
+
+                <div class="form-group full">
+
+                    <label>
+                        Deskripsi & Spesifikasi Produk
+                    </label>
+
+                    <textarea
+                        id="productDescription"
+                        placeholder="Contoh: Layar 120Hz, RAM 8GB, Storage 256GB..."
+                        required>
+                    </textarea>
+
+                </div>
+
+
+                <!-- IMAGE SOURCE -->
+
+                <div class="form-group">
+
+                    <label>
+                        URL Gambar Produk
+                    </label>
+
+                    <input
+                        type="url"
+                        id="productImage"
+                        placeholder="https://..."
+                        required>
+
+                </div>
+
+
+                <!-- VIDEO SOURCE -->
+
+                <div class="form-group">
+
+                    <label>
+                        URL Video Demo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productVideo"
+                        placeholder="videos/demo.mp4"
+                        value="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <button
+                        type="submit"
+                        class="btn btn-black">
+
+                        Simpan Produk ke Database
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+
+        <hr
+            style="
+            margin:30px 0;
+            border:none;
+            border-top:1px solid #ddd;
+            ">
+
+
+        <h3 style="margin-bottom:15px;">
+            Produk Tersimpan
+        </h3>
+
+
+        <div id="adminProductList">
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    GadgetStore Pro © 2026
+
+</footer>
+
+
+
+<script>
+
+    /* =================================================
+       DATA PRODUK
+    ================================================= */
+
+    const defaultProducts = [
+
+        {
+            id: 1,
+
+            name: "Smartphone Premium",
+
+            price: 12000000,
+
+            description:
+                "Layar AMOLED 120Hz, RAM 8GB, storage 256GB, kamera berkualitas tinggi dan baterai tahan lama.",
+
+            image:
+                "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80",
+
+            video:
+                "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+        },
+
+
+        {
+            id: 2,
+
+            name: "Laptop Ultra",
+
+            price: 15000000,
+
+            description:
+                "Laptop ringan dengan performa tinggi, RAM 16GB, SSD 512GB dan cocok untuk pekerjaan maupun belajar.",
+
+            image:
+                "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=80",
+
+            video:
+                "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+        },
+
+
+        {
+            id: 3,
+
+            name: "Wireless Earbuds",
+
+            price: 899000,
+
+            description:
+                "Earbuds wireless dengan desain compact, koneksi stabil dan baterai yang tahan digunakan sepanjang hari.",
+
+            image:
+                "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=800&q=80",
+
+            video:
+                "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+        },
+
+
+        {
+            id: 4,
+
+            name: "Smartwatch",
+
+            price: 1299000,
+
+            description:
+                "Smartwatch dengan layar digital, notifikasi smartphone dan berbagai fitur aktivitas harian.",
+
+            image:
+                "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80",
+
+            video:
+                "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+        }
+
+    ];
+
+
+    /* =================================================
+       LOCAL STORAGE
+    ================================================= */
+
+    let products =
+        JSON.parse(localStorage.getItem("gadgetProducts"))
+        || defaultProducts;
+
+
+    let selectedProduct = null;
+
+
+    /* =================================================
+       FORMAT RUPIAH
+    ================================================= */
+
+    function formatRupiah(number){
+
+        return new Intl.NumberFormat(
+            "id-ID",
+            {
+                style:"currency",
+                currency:"IDR",
+                maximumFractionDigits:0
+            }
+        ).format(number);
+
+    }
+
+
+    /* =================================================
+       TAMPILKAN PRODUK
+    ================================================= */
+
+    function displayProducts(){
+
+        const grid =
+            document.getElementById("productGrid");
+
+        grid.innerHTML = "";
+
+
+        products.forEach(product => {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "product-card";
+
+
+            card.innerHTML = `
+
+                <img
+                    src="${product.image}"
+                    class="product-image"
+                    alt="${product.name}"
+                    onerror="this.src='https://via.placeholder.com/800x500?text=GadgetStore'">
+
+
+                <div class="product-content">
+
+                    <h3 class="product-name">
+                        ${product.name}
+                    </h3>
+
+
+                    <div class="price">
+                        ${formatRupiah(product.price)}
+                    </div>
+
+
+                    <p class="description">
+                        ${product.description}
+                    </p>
+
+
+                    <div class="video-title">
+                        🎥 Video Demo
+               
