@@ -131,8 +131,9 @@
 
         .link-text a {
             color: #38bdf8;
-            text-decoration: none;
+            text-decoration: underline;
             cursor: pointer;
+            font-weight: bold;
         }
 
         /* Dashboard & Layout */
@@ -319,57 +320,57 @@
     <!-- Section Login & Registrasi -->
     <div class="auth-container" id="authSection">
         <div class="auth-tabs">
-            <button class="tab-btn active" onclick="switchTab('user')">Pengguna</button>
-            <button class="tab-btn" onclick="switchTab('admin')">Admin</button>
+            <button type="button" class="tab-btn active" id="tabUser" onclick="switchTab('user')">Pengguna</button>
+            <button type="button" class="tab-btn" id="tabAdmin" onclick="switchTab('admin')">Admin</button>
         </div>
 
         <!-- Form Login Pengguna -->
-        <form id="userLoginForm" onsubmit="loginUser(event)">
+        <div id="userLoginForm">
             <div class="form-group">
                 <label>Username</label>
-                <input type="text" id="usernameInput" placeholder="Masukkan username" required>
+                <input type="text" id="usernameInput" placeholder="Masukkan username">
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" placeholder="Masukkan password" required>
+                <input type="password" id="userPasswordInput" placeholder="Masukkan password">
             </div>
-            <button type="submit" class="btn-glossy">Masuk sebagai Pengguna</button>
+            <button type="button" class="btn-glossy" onclick="loginUser()">Masuk sebagai Pengguna</button>
             <div class="link-text">
                 Belum punya akun? <a onclick="toggleRegister()">Create Account</a>
             </div>
-        </form>
+        </div>
 
         <!-- Form Registrasi Pengguna -->
-        <form id="userRegisterForm" style="display: none;" onsubmit="registerUser(event)">
+        <div id="userRegisterForm" style="display: none;">
             <div class="form-group">
                 <label>Username Baru</label>
-                <input type="text" placeholder="Buat username" required>
+                <input type="text" id="regUsername" placeholder="Buat username">
             </div>
             <div class="form-group">
                 <label>Password Baru</label>
-                <input type="password" placeholder="Buat password" required>
+                <input type="password" id="regPassword" placeholder="Buat password">
             </div>
-            <button type="submit" class="btn-glossy">Daftar Akun</button>
+            <button type="button" class="btn-glossy" onclick="registerUser()">Daftar Akun</button>
             <div class="link-text">
                 Sudah punya akun? <a onclick="toggleRegister()">Login</a>
             </div>
-        </form>
+        </div>
 
         <!-- Form Login Admin -->
-        <form id="adminLoginForm" style="display: none;" onsubmit="loginAdmin(event)">
+        <div id="adminLoginForm" style="display: none;">
             <div class="form-group">
                 <label>Password Admin</label>
-                <input type="password" placeholder="Masukkan password admin" required>
+                <input type="password" id="adminPasswordInput" placeholder="Masukkan password admin">
             </div>
-            <button type="submit" class="btn-glossy">Masuk Panel Admin</button>
-        </form>
+            <button type="button" class="btn-glossy" onclick="loginAdmin()">Masuk Panel Admin</button>
+        </div>
     </div>
 
     <!-- Dashboard Aplikasi -->
-    <div id="mainDashboard">
+    <div id="mainDashboard" style="display: none;">
         <div class="nav-bar">
             <span id="userInfo">Logged in as: <b>Guest</b></span>
-            <button class="btn-logout" onclick="logout()">Logout</button>
+            <button type="button" class="btn-logout" onclick="logout()">Logout</button>
         </div>
 
         <div class="dashboard" id="dashboardLayout">
@@ -442,7 +443,7 @@
     <!-- Halaman Modal Checkout Interaktif -->
     <div class="checkout-modal" id="checkoutModal">
         <div class="checkout-box">
-            <button class="close-btn" onclick="closeCheckout()">&times;</button>
+            <button type="button" class="close-btn" onclick="closeCheckout()">&times;</button>
             <h2 class="panel-title">Formulir Pembelian</h2>
             
             <div class="summary-card">
@@ -483,19 +484,24 @@
         let currentUser = 'Guest';
 
         function switchTab(role) {
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach(tab => tab.classList.remove('active'));
+            const tabUser = document.getElementById('tabUser');
+            const tabAdmin = document.getElementById('tabAdmin');
+            const userLoginForm = document.getElementById('userLoginForm');
+            const adminLoginForm = document.getElementById('adminLoginForm');
+            const userRegisterForm = document.getElementById('userRegisterForm');
 
             if (role === 'user') {
-                tabs[0].classList.add('active');
-                document.getElementById('userLoginForm').style.display = 'block';
-                document.getElementById('adminLoginForm').style.display = 'none';
-                document.getElementById('userRegisterForm').style.display = 'none';
+                tabUser.classList.add('active');
+                tabAdmin.classList.remove('active');
+                userLoginForm.style.display = 'block';
+                adminLoginForm.style.display = 'none';
+                userRegisterForm.style.display = 'none';
             } else {
-                tabs[1].classList.add('active');
-                document.getElementById('userLoginForm').style.display = 'none';
-                document.getElementById('adminLoginForm').style.display = 'block';
-                document.getElementById('userRegisterForm').style.display = 'none';
+                tabAdmin.classList.add('active');
+                tabUser.classList.remove('active');
+                userLoginForm.style.display = 'none';
+                adminLoginForm.style.display = 'block';
+                userRegisterForm.style.display = 'none';
             }
         }
 
@@ -511,21 +517,24 @@
             }
         }
 
-        function loginUser(e) {
-            e.preventDefault();
-            const username = document.getElementById('usernameInput').value || 'Pengguna';
+        function loginUser() {
+            const usernameInput = document.getElementById('usernameInput').value;
+            const username = usernameInput.trim() !== '' ? usernameInput : 'Pengguna';
             currentUser = username;
             startSession('Pengguna: ' + username, false);
         }
 
-        function registerUser(e) {
-            e.preventDefault();
-            alert('Akun berhasil dibuat! Silakan login menggunakan akun Anda.');
+        function registerUser() {
+            const username = document.getElementById('regUsername').value;
+            if(!username) {
+                alert('Silakan isi username terlebih dahulu!');
+                return;
+            }
+            alert('Akun berhasil dibuat! Silakan login dengan akun kamu.');
             toggleRegister();
         }
 
-        function loginAdmin(e) {
-            e.preventDefault();
+        function loginAdmin() {
             currentUser = 'Admin';
             startSession('Administrator System', true);
         }
@@ -533,15 +542,4 @@
         function startSession(roleName, isAdmin) {
             document.getElementById('authSection').style.display = 'none';
             document.getElementById('mainDashboard').style.display = 'block';
-            document.getElementById('dashboardLayout').style.display = 'flex';
-            document.getElementById('userInfo').innerHTML = 'Logged in as: <b>' + roleName + '</b>';
-            
-            if (!isAdmin) {
-                document.getElementById('adminPanel').style.display = 'none';
-            } else {
-                document.getElementById('adminPanel').style.display = 'block';
-            }
-        }
-
-        function logout() {
-            document.getElementById('mainDashboard').style.display = '
+        
