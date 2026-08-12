@@ -827,21 +827,9 @@
             const prodName = document.getElementById('checkoutProdName').innerText;
 
             const orderId = 'ORD-' + Date.now();
-            const initialStatus = 'Pesanan Diproses 📦';
+            const initialStatus = 'Pesanan Diproses ⏳';
 
-            // Tambah Status di Katalog Pengguna
-            const targetCard = document.getElementById(activeCardId);
-            if (targetCard) {
-                let badge = targetCard.querySelector('.status-badge');
-                if (!badge) {
-                    badge = document.createElement('div');
-                    badge.className = 'status-badge';
-                    targetCard.querySelector('.action-area').appendChild(badge);
-                }
-                badge.innerText = 'Status: ' + initialStatus;
-            }
-
-            // Simpan Ke Database Pesanan
+            // Simpan Ke Database Pesanan (tanpa menampilkan badge di kartu produk)
             allOrders.push({
                 id: orderId,
                 cardId: activeCardId,
@@ -855,7 +843,7 @@
             // Update Notifikasi Badge Admin
             document.getElementById('orderCountBadge').innerText = allOrders.length + ' New';
 
-            alert('Pesanan berhasil dibuat! Kamu sekarang bisa melacak status pesanan kamu.');
+            alert('Pesanan berhasil dibuat! Anda dapat mengecek status pesanan melalui tombol "Lacak Pesanan 📦" di atas.');
             event.target.reset();
             closeCheckout();
         }
@@ -878,22 +866,22 @@
             }
         }
 
-        /* FITUR KONFIRMASI & UPDATE STATUS OLEH ADMIN */
+        /* FITUR UPDATE STATUS DENGAN REVISI PILIHAN STATUS (ADMIN) */
         function updateOrderStatus(index) {
             const order = allOrders[index];
             const choice = prompt(
                 `Pilih status terbaru untuk pesanan dari "${order.buyer}":\n` +
-                "1. Pesanan Diproses 📦\n" +
-                "2. Pesanan Sedang Diantarkan 🚚\n" +
+                "1. Pesanan Sedang Dikemas 📦\n" +
+                "2. Pesanan Diantarkan 🚚\n" +
                 "3. Pesanan Selesai ✅\n\n" +
                 "Ketik angka pilihan (1, 2, atau 3):"
             );
 
             let newStatus = '';
             if (choice === '1') {
-                newStatus = 'Pesanan Diproses 📦';
+                newStatus = 'Pesanan Sedang Dikemas 📦';
             } else if (choice === '2') {
-                newStatus = 'Pesanan Sedang Diantarkan 🚚';
+                newStatus = 'Pesanan Diantarkan 🚚';
             } else if (choice === '3') {
                 newStatus = 'Pesanan Selesai ✅';
             } else if (choice !== null) {
@@ -902,18 +890,7 @@
             }
 
             if (newStatus) {
-                // Update di array pesanan
                 order.status = newStatus;
-
-                // Update badge status di produk katalog pengguna jika ada
-                if (order.cardId) {
-                    const card = document.getElementById(order.cardId);
-                    if (card) {
-                        const badge = card.querySelector('.status-badge');
-                        if (badge) badge.innerText = 'Status: ' + newStatus;
-                    }
-                }
-
                 renderAdminOrders();
                 alert('Status pesanan berhasil diperbarui!');
             }
