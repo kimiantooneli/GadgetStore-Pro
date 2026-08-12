@@ -156,7 +156,7 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
 
-        .admin-panel { flex: 1.2; display: flex; flex-direction: column; gap: 20px; }
+        .admin-panel { flex: 1.3; display: flex; flex-direction: column; gap: 20px; }
         .customer-panel { flex: 2; }
 
         .panel-title {
@@ -378,17 +378,28 @@
         .order-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .order-table th, .order-table td {
-            padding: 10px;
+            padding: 8px;
             text-align: left;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .order-table th {
             color: #38bdf8;
+        }
+
+        .btn-status-update {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 5px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 11px;
         }
     </style>
 </head>
@@ -488,10 +499,10 @@
                     </form>
                 </div>
 
-                <!-- DAFTAR PESANAN PEMBELI UNTUK ADMIN -->
+                <!-- DAFTAR PESANAN PEMBELI & KONFIRMASI STATUS (ADMIN) -->
                 <div style="margin-top: 15px;">
                     <h2 class="panel-title">
-                        Notifikasi & Detail Pesanan 
+                        Kelola Status Pesanan
                         <span class="notification-badge" id="orderCountBadge">0 New</span>
                     </h2>
                     <div style="max-height: 250px; overflow-y: auto;">
@@ -500,8 +511,8 @@
                                 <tr>
                                     <th>Pembeli</th>
                                     <th>Produk</th>
-                                    <th>Alamat</th>
-                                    <th>Metode</th>
+                                    <th>Status Saat Ini</th>
+                                    <th>Aksi Admin</th>
                                 </tr>
                             </thead>
                             <tbody id="adminOrderTableBody">
@@ -762,7 +773,6 @@
             alert('Produk berhasil ditambahkan ke katalog!');
         }
 
-        /* EDIT PRODUK DENGAN PILIHAN DETAIL */
         function editProduct(cardId) {
             const titleEl = document.getElementById('title-' + cardId);
             const priceEl = document.getElementById('price-' + cardId);
@@ -816,6 +826,9 @@
             const paymentMethod = document.getElementById('paymentMethod').value;
             const prodName = document.getElementById('checkoutProdName').innerText;
 
+            const orderId = 'ORD-' + Date.now();
+            const initialStatus = 'Pesanan Diproses 📦';
+
             // Tambah Status di Katalog Pengguna
             const targetCard = document.getElementById(activeCardId);
             if (targetCard) {
@@ -825,16 +838,18 @@
                     badge.className = 'status-badge';
                     targetCard.querySelector('.action-area').appendChild(badge);
                 }
-                badge.innerText = 'Status: Pesanan Diproses 🚚';
+                badge.innerText = 'Status: ' + initialStatus;
             }
 
             // Simpan Ke Database Pesanan
             allOrders.push({
+                id: orderId,
+                cardId: activeCardId,
                 product: prodName,
                 buyer: buyerName,
                 address: buyerAddress,
                 method: paymentMethod,
-                status: 'Pesanan sedang diproses dan dikemas'
+                status: initialStatus
             });
 
             // Update Notifikasi Badge Admin
@@ -850,14 +865,57 @@
             if (allOrders.length === 0) {
                 tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #94a3b8;">Belum ada pesanan masuk.</td></tr>`;
             } else {
-                tableBody.innerHTML = allOrders.map(ord => `
+                tableBody.innerHTML = allOrders.map((ord, index) => `
                     <tr>
                         <td><b>${ord.buyer}</b></td>
                         <td>${ord.product}</td>
-                        <td>${ord.address}</td>
-                        <td><span style="color: #38bdf8;">${ord.method}</span></td>
+                        <td><span style="color: #38bdf8; font-weight: bold;">${ord.status}</span></td>
+                        <td>
+                            <button type="button" class="btn-status-update" onclick="updateOrderStatus(${index})">Update Status</button>
+                        </td>
                     </tr>
                 `).join('');
+            }
+        }
+
+        /* FITUR KONFIRMASI & UPDATE STATUS OLEH ADMIN */
+        function updateOrderStatus(index) {
+            const order = allOrders[index];
+            const choice = prompt(
+                `Pilih status terbaru untuk pesanan dari "${order.buyer}":\n` +
+                "1. Pesanan Diproses 📦\n" +
+                "2. Pesanan Sedang Diantarkan 🚚\n" +
+                "3. Pesanan Selesai ✅\n\n" +
+                "Ketik angka pilihan (1, 2, atau 3):"
+            );
+
+            let newStatus = '';
+            if (choice === '1') {
+                newStatus = 'Pesanan Diproses 📦';
+            } else if (choice === '2') {
+                newStatus = 'Pesanan Sedang Diantarkan 🚚';
+            } else if (choice === '3') {
+                newStatus = 'Pesanan Selesai ✅';
+            } else if (choice !== null) {
+                alert('Pilihan tidak valid! Harap isi angka 1, 2, atau 3.');
+                return;
+            }
+
+            if (newStatus) {
+                // Update di array pesanan
+                order.status = newStatus;
+
+                // Update badge status di produk katalog pengguna jika ada
+                if (order.cardId) {
+                    const card = document.getElementById(order.cardId);
+                    if (card) {
+                        const badge = card.querySelector('.status-badge');
+                        if (badge) badge.innerText = 'Status: ' + newStatus;
+                    }
+                }
+
+                renderAdminOrders();
+                alert('Status pesanan berhasil diperbarui!');
             }
         }
 
