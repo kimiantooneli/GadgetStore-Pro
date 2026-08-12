@@ -156,7 +156,7 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
 
-        .admin-panel { flex: 1; }
+        .admin-panel { flex: 1.2; display: flex; flex-direction: column; gap: 20px; }
         .customer-panel { flex: 2; }
 
         .panel-title {
@@ -165,6 +165,18 @@
             padding-bottom: 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             color: #f8fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification-badge {
+            background: #ef4444;
+            color: #fff;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: bold;
         }
 
         .product-grid {
@@ -239,6 +251,7 @@
             transition: 0.3s;
             border: none;
             cursor: pointer;
+            width: 100%;
         }
 
         .btn-buy:hover {
@@ -360,6 +373,23 @@
             text-align: center;
             font-weight: bold;
         }
+
+        /* TABEL PESANAN ADMIN */
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .order-table th, .order-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .order-table th {
+            color: #38bdf8;
+        }
     </style>
 </head>
 <body>
@@ -431,43 +461,70 @@
         <div class="dashboard" id="dashboardLayout">
             <!-- PANEL ADMIN -->
             <div class="panel admin-panel" id="adminPanel">
-                <h2 class="panel-title">Panel Admin - Tambah Produk Baru</h2>
-                <form id="productForm" onsubmit="addProduct(event)">
-                    <div class="form-group">
-                        <label>Nama Produk</label>
-                        <input type="text" id="prodName" placeholder="iPhone 15 Pro Metallic" required>
+                <div>
+                    <h2 class="panel-title">Panel Admin - Tambah Produk</h2>
+                    <form id="productForm" onsubmit="addProduct(event)">
+                        <div class="form-group">
+                            <label>Nama Produk</label>
+                            <input type="text" id="prodName" placeholder="iPhone 15 Pro Metallic" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Harga Produk</label>
+                            <input type="text" id="prodPrice" placeholder="Rp 20.999.000" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Deskripsi Produk</label>
+                            <textarea id="prodDesc" rows="2" placeholder="Layar Super Retina XDR, Titanium Frame..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Foto dari Galeri</label>
+                            <input type="file" id="prodImgFile" accept="image/*" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Video dari Galeri</label>
+                            <input type="file" id="prodVideoFile" accept="video/*" required>
+                        </div>
+                        <button type="submit" class="btn-glossy">Simpan Produk ke Katalog</button>
+                    </form>
+                </div>
+
+                <!-- DAFTAR PESANAN PEMBELI UNTUK ADMIN -->
+                <div style="margin-top: 15px;">
+                    <h2 class="panel-title">
+                        Notifikasi & Detail Pesanan 
+                        <span class="notification-badge" id="orderCountBadge">0 New</span>
+                    </h2>
+                    <div style="max-height: 250px; overflow-y: auto;">
+                        <table class="order-table">
+                            <thead>
+                                <tr>
+                                    <th>Pembeli</th>
+                                    <th>Produk</th>
+                                    <th>Alamat</th>
+                                    <th>Metode</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminOrderTableBody">
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: #94a3b8;">Belum ada pesanan masuk.</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="form-group">
-                        <label>Harga Produk</label>
-                        <input type="text" id="prodPrice" placeholder="Rp 20.999.000" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Deskripsi Produk</label>
-                        <textarea id="prodDesc" rows="2" placeholder="Layar Super Retina XDR, Titanium Frame..." required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Upload Foto dari Galeri</label>
-                        <input type="file" id="prodImgFile" accept="image/*" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Upload Video dari Galeri</label>
-                        <input type="file" id="prodVideoFile" accept="video/*" required>
-                    </div>
-                    <button type="submit" class="btn-glossy">Simpan Produk ke Katalog</button>
-                </form>
+                </div>
             </div>
 
             <!-- KATALOG PRODUK -->
             <div class="panel customer-panel" id="customerPanel">
                 <h2 class="panel-title">Katalog Produk Gadget Store</h2>
                 <div class="product-grid" id="productGrid">
-                    <!-- Produk Bawaan Default -->
+                    <!-- Produk Default 1 -->
                     <div class="product-card" id="card-1">
                         <div>
                             <img src="iphone.jpg" alt="iPhone 15 Pro Titanium">
-                            <div class="product-title" id="title-1">iPhone 15 Pro Titanium</div>
-                            <div class="product-price" id="price-1">Rp 20.999.000</div>
-                            <div class="product-desc">Warna Natural Titanium Gray. Chip A17 Pro, Bodi Titanium Ringan & Glossy Premium.</div>
+                            <div class="product-title" id="title-card-1">iPhone 15 Pro Titanium</div>
+                            <div class="product-price" id="price-card-1">Rp 20.999.000</div>
+                            <div class="product-desc" id="desc-card-1">Warna Natural Titanium Gray. Chip A17 Pro, Bodi Titanium Ringan & Glossy Premium.</div>
                             <video controls>
                                 <source src="iphone-demo.mp4" type="video/mp4">
                                 Browser kamu tidak mendukung video.
@@ -482,12 +539,13 @@
                         </div>
                     </div>
 
+                    <!-- Produk Default 2 -->
                     <div class="product-card" id="card-2">
                         <div>
                             <img src="macbook.jpg" alt="MacBook Pro Space Gray">
-                            <div class="product-title" id="title-2">MacBook Pro Space Gray</div>
-                            <div class="product-price" id="price-2">Rp 28.499.000</div>
-                            <div class="product-desc">Warna Glossy Space Gray. Chip M3 Max, RAM 36GB, Retina XDR Display.</div>
+                            <div class="product-title" id="title-card-2">MacBook Pro Space Gray</div>
+                            <div class="product-price" id="price-card-2">Rp 28.499.000</div>
+                            <div class="product-desc" id="desc-card-2">Warna Glossy Space Gray. Chip M3 Max, RAM 36GB, Retina XDR Display.</div>
                             <video controls>
                                 <source src="macbook-demo.mp4" type="video/mp4">
                                 Browser kamu tidak mendukung video.
@@ -531,10 +589,10 @@
                     <label>Metode Pembayaran</label>
                     <select id="paymentMethod" required>
                         <option value="">-- Pilih Metode --</option>
-                        <option value="bank">Transfer Bank (BCA / Mandiri)</option>
-                        <option value="ewallet">E-Wallet (Gopay / ShopeePay / OVO)</option>
-                        <option value="qris">QRIS Instant</option>
-                        <option value="cod">Cash on Delivery (COD)</option>
+                        <option value="Transfer Bank">Transfer Bank (BCA / Mandiri)</option>
+                        <option value="E-Wallet">E-Wallet (Gopay / ShopeePay / OVO)</option>
+                        <option value="QRIS">QRIS Instant</option>
+                        <option value="COD">Cash on Delivery (COD)</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -560,7 +618,7 @@
     <script>
         let currentRole = 'user'; 
         let activeCardId = null;
-        let myOrders = [];
+        let allOrders = [];
 
         function switchTab(role) {
             const tabUser = document.getElementById('tabUser');
@@ -629,9 +687,8 @@
             document.getElementById('dashboardLayout').style.display = 'flex';
 
             document.getElementById('userInfo').innerHTML = 'Logged in as: <b>' + roleName + '</b>';
-            document.getElementById('adminPanel').style.display = isAdmin ? 'block' : 'none';
+            document.getElementById('adminPanel').style.display = isAdmin ? 'flex' : 'none';
 
-            // Mengatur tampilan berdasarkan Role (User/Admin)
             const userBtns = document.querySelectorAll('.user-only');
             const adminBtns = document.querySelectorAll('.admin-only');
             const trackBtn = document.getElementById('trackBtn');
@@ -640,6 +697,7 @@
                 userBtns.forEach(el => el.style.display = 'none');
                 adminBtns.forEach(el => el.style.display = 'flex');
                 trackBtn.style.display = 'none';
+                renderAdminOrders();
             } else {
                 userBtns.forEach(el => el.style.display = 'block');
                 adminBtns.forEach(el => el.style.display = 'none');
@@ -684,7 +742,7 @@
                     <img src="${imgUrl}" alt="${name}">
                     <div class="product-title" id="title-${cardId}">${name}</div>
                     <div class="product-price" id="price-${cardId}">${price}</div>
-                    <div class="product-desc">${desc}</div>
+                    <div class="product-desc" id="desc-${cardId}">${desc}</div>
                     <video controls>
                         <source src="${videoUrl}" type="video/mp4">
                         Browser kamu tidak mendukung video.
@@ -704,15 +762,32 @@
             alert('Produk berhasil ditambahkan ke katalog!');
         }
 
+        /* EDIT PRODUK DENGAN PILIHAN DETAIL */
         function editProduct(cardId) {
-            const titleEl = document.getElementById('title-' + cardId.replace('card-', ''));
-            const priceEl = document.getElementById('price-' + cardId.replace('card-', ''));
+            const titleEl = document.getElementById('title-' + cardId);
+            const priceEl = document.getElementById('price-' + cardId);
+            const descEl = document.getElementById('desc-' + cardId);
 
-            const newName = prompt('Edit Nama Produk:', titleEl ? titleEl.innerText : '');
-            const newPrice = prompt('Edit Harga Produk:', priceEl ? priceEl.innerText : '');
+            const choice = prompt(
+                "Pilih data yang ingin Anda ubah:\n" +
+                "1. Ubah Nama Produk\n" +
+                "2. Ubah Harga Produk\n" +
+                "3. Ubah Deskripsi Produk\n\n" +
+                "Ketik angka (1, 2, atau 3):"
+            );
 
-            if (newName) titleEl.innerText = newName;
-            if (newPrice) priceEl.innerText = newPrice;
+            if (choice === '1') {
+                const newName = prompt('Masukkan Nama Produk Baru:', titleEl ? titleEl.innerText : '');
+                if (newName) titleEl.innerText = newName;
+            } else if (choice === '2') {
+                const newPrice = prompt('Masukkan Harga Produk Baru:', priceEl ? priceEl.innerText : '');
+                if (newPrice) priceEl.innerText = newPrice;
+            } else if (choice === '3') {
+                const newDesc = prompt('Masukkan Deskripsi Produk Baru:', descEl ? descEl.innerText : '');
+                if (newDesc) descEl.innerText = newDesc;
+            } else if (choice !== null) {
+                alert('Pilihan tidak valid! Masukkan angka 1, 2, atau 3.');
+            }
         }
 
         function deleteProduct(cardId) {
@@ -737,9 +812,11 @@
         function processOrder(event) {
             event.preventDefault();
             const buyerName = document.getElementById('buyerName').value;
+            const buyerAddress = document.getElementById('buyerAddress').value;
+            const paymentMethod = document.getElementById('paymentMethod').value;
             const prodName = document.getElementById('checkoutProdName').innerText;
 
-            // Tambahkan status ke kartu produk setelah CO
+            // Tambah Status di Katalog Pengguna
             const targetCard = document.getElementById(activeCardId);
             if (targetCard) {
                 let badge = targetCard.querySelector('.status-badge');
@@ -751,24 +828,45 @@
                 badge.innerText = 'Status: Pesanan Diproses 🚚';
             }
 
-            // Tambahkan ke daftar lacak pesanan
-            myOrders.push({
+            // Simpan Ke Database Pesanan
+            allOrders.push({
                 product: prodName,
                 buyer: buyerName,
+                address: buyerAddress,
+                method: paymentMethod,
                 status: 'Pesanan sedang diproses dan dikemas'
             });
+
+            // Update Notifikasi Badge Admin
+            document.getElementById('orderCountBadge').innerText = allOrders.length + ' New';
 
             alert('Pesanan berhasil dibuat! Kamu sekarang bisa melacak status pesanan kamu.');
             event.target.reset();
             closeCheckout();
         }
 
+        function renderAdminOrders() {
+            const tableBody = document.getElementById('adminOrderTableBody');
+            if (allOrders.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #94a3b8;">Belum ada pesanan masuk.</td></tr>`;
+            } else {
+                tableBody.innerHTML = allOrders.map(ord => `
+                    <tr>
+                        <td><b>${ord.buyer}</b></td>
+                        <td>${ord.product}</td>
+                        <td>${ord.address}</td>
+                        <td><span style="color: #38bdf8;">${ord.method}</span></td>
+                    </tr>
+                `).join('');
+            }
+        }
+
         function openTrackingModal() {
             const container = document.getElementById('trackingList');
-            if (myOrders.length === 0) {
+            if (allOrders.length === 0) {
                 container.innerHTML = `<p style="color: #94a3b8; font-size: 14px; text-align: center;">Belum ada pesanan yang sedang diproses.</p>`;
             } else {
-                container.innerHTML = myOrders.map(item => `
+                container.innerHTML = allOrders.map(item => `
                     <div class="summary-card" style="margin-bottom: 10px;">
                         <div style="font-weight: bold; font-size: 15px; color: #fff;">${item.product}</div>
                         <div style="font-size: 12px; color: #94a3b8; margin-top: 2px;">Pemesan: ${item.buyer}</div>
