@@ -379,12 +379,12 @@
                         <textarea id="prodDesc" rows="2" placeholder="Layar Super Retina XDR, Titanium Frame..." required></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Nama File Gambar (Contoh: iphone.jpg)</label>
-                        <input type="text" id="prodImg" placeholder="iphone.jpg" required>
+                        <label>Upload Foto Produk</label>
+                        <input type="file" id="prodImg" accept="image/*" required>
                     </div>
                     <div class="form-group">
-                        <label>Nama File Video (Contoh: iphone-demo.mp4)</label>
-                        <input type="text" id="prodVideo" placeholder="iphone-demo.mp4" required>
+                        <label>Upload Video Produk</label>
+                        <input type="file" id="prodVideo" accept="video/*" required>
                     </div>
                     <button type="submit" class="btn-glossy">Simpan Produk ke Database</button>
                 </form>
@@ -393,33 +393,7 @@
             <div class="panel customer-panel" id="customerPanel">
                 <h2 class="panel-title">Katalog Produk Gadget Store</h2>
                 <div class="product-grid" id="productGrid">
-
-                    <div class="product-card">
-                        <img src="iphone.jpg" alt="iPhone 15 Pro Titanium">
-                        <div class="product-title">iPhone 15 Pro Titanium</div>
-                        <div class="product-price">Rp 20.999.000</div>
-                        <div class="product-desc">Warna Natural Titanium Gray. Chip A17 Pro, Bodi Titanium Ringan & Glossy Premium.</div>
-                        <video controls>
-                            <source src="iphone-demo.mp4" type="video/mp4">
-                            Browser kamu tidak mendukung video.
-                        </video>
-                        <a href="javascript:void(0)" class="btn-buy" onclick="openCheckout('iPhone 15 Pro Titanium', 'Rp 20.999.000')">Beli Sekarang</a>
-                        <div class="status-badge">Status: Pesanan Belum Dibayar</div>
-                    </div>
-
-                    <div class="product-card">
-                        <img src="macbook.jpg" alt="MacBook Pro Space Gray">
-                        <div class="product-title">MacBook Pro Space Gray</div>
-                        <div class="product-price">Rp 28.499.000</div>
-                        <div class="product-desc">Warna Glossy Space Gray. Chip M3 Max, RAM 36GB, Retina XDR Display.</div>
-                        <video controls>
-                            <source src="macbook-demo.mp4" type="video/mp4">
-                            Browser kamu tidak mendukung video.
-                        </video>
-                        <a href="javascript:void(0)" class="btn-buy" onclick="openCheckout('MacBook Pro Space Gray', 'Rp 28.499.000')">Beli Sekarang</a>
-                        <div class="status-badge">Status: Pesanan Diproses</div>
-                    </div>
-
+                    <!-- Produk akan muncul di sini setelah admin menambahkannya lewat form -->
                 </div>
             </div>
         </div>
@@ -539,4 +513,71 @@
             document.getElementById('authSection').style.display = 'block';
 
             switchTab('user');
-            document.getElementById('userLoginForm').style.display = 'b
+            document.getElementById('userLoginForm').style.display = 'block';
+            document.getElementById('userRegisterForm').style.display = 'none';
+
+            document.getElementById('usernameInput').value = '';
+            document.getElementById('userPasswordInput').value = '';
+            document.getElementById('adminPasswordInput').value = '';
+        }
+
+        function addProduct(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('prodName').value;
+            const price = document.getElementById('prodPrice').value;
+            const desc = document.getElementById('prodDesc').value;
+            const imgFile = document.getElementById('prodImg').files[0];
+            const videoFile = document.getElementById('prodVideo').files[0];
+
+            if (!imgFile || !videoFile) {
+                alert('Silakan upload foto dan video produk terlebih dahulu!');
+                return;
+            }
+
+            const imgURL = URL.createObjectURL(imgFile);
+            const videoURL = URL.createObjectURL(videoFile);
+
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="${imgURL}" alt="${name}">
+                <div class="product-title">${name}</div>
+                <div class="product-price">${price}</div>
+                <div class="product-desc">${desc}</div>
+                <video controls>
+                    <source src="${videoURL}" type="video/mp4">
+                    Browser kamu tidak mendukung video.
+                </video>
+                <a href="javascript:void(0)" class="btn-buy" onclick="openCheckout('${name}', '${price}')">Beli Sekarang</a>
+                <div class="status-badge">Status: Pesanan Belum Dibayar</div>
+            `;
+
+            document.getElementById('productGrid').appendChild(card);
+            event.target.reset();
+            alert('Produk berhasil ditambahkan ke katalog!');
+        }
+
+        function openCheckout(name, price) {
+            document.getElementById('checkoutProdName').innerText = name;
+            document.getElementById('checkoutProdPrice').innerText = price;
+            document.getElementById('checkoutSubtotal').value = price;
+            document.getElementById('checkoutModal').style.display = 'flex';
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').style.display = 'none';
+        }
+
+        function processOrder(event) {
+            event.preventDefault();
+            const buyerName = document.getElementById('buyerName').value;
+
+            alert('Pesanan atas nama ' + buyerName + ' berhasil dibuat! Terima kasih sudah berbelanja di GadgetStore.');
+
+            event.target.reset();
+            closeCheckout();
+        }
+    </script>
+</body>
+</html>
